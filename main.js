@@ -42,6 +42,22 @@ document.addEventListener("DOMContentLoaded", function(event)
   //Prevent form from submitting
   event.preventDefault();
 });
+// Delete bookmark
+function deleteBookmark(url)
+{
+  //Get bookmarks from localStorage
+  var boookmarks = JSON.parse(localStorage.getItem('boookmarks'));
+  // Loop thorugh bookmarks
+  for (var i = 0; i < bookmarks.length; i++)
+  {
+    if(bookmarks[i].url == url)
+    {
+      //Remove from array
+      bookmarks.splice(i, 1);
+    }
+  }
+  localStorage.setItem('boookmarks', JSON.stringify(boookmarks));
+}
 function fetchBookmarks()
 {
   var boookmarks = JSON.parse(localStorage.getItem('boookmarks'));
@@ -49,6 +65,15 @@ function fetchBookmarks()
   //Get output id
   var boookmarksResults = document.getElementById('boookmarksResults');
   //build output
-  boookmarksResults.innerHTML = 'Hello';
+  boookmarksResults.innerHTML = '';
+  for(var i = 0; i < boookmarks.length; i++)
+  {
+    var name = boookmarks[i].name;
+    var url = boookmarks[i].url;
+
+    boookmarksResults.innerHTML += '<div><h3>'+name+
+                                    "<button> href="+url+"</button>"
+                                    "</h3></div>"
+  }
 }
 });
